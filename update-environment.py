@@ -25,7 +25,7 @@ projects = circle.getProjects()
 
 var = options.key
 value = options.value
-tup = {"name": "seanfoo", "value":"hahaha!"}
+tup = {"name": var, "value": value}
 for project in projects:
     envvars = circle.getEnvironmentVariables(project['username'], project['reponame'])
     for envvar in envvars:

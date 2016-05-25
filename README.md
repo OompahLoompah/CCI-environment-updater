@@ -3,7 +3,9 @@ This script checks for projects with builds that have used a given environment v
 
 ##Use
 
-run 
+First edit .config-example and add your api key and base url in place of the existing example values.
+
+then run 
 
 `python update-environment.py -k <someVarName> -v <someValue>`
 
