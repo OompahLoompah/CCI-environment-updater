@@ -1,6 +1,8 @@
 import json
+from urllib import urlencode
 from urllib3 import RequestWithMethod
 from urllib2 import Request, urlopen, URLError
+
 class circleAPI:
     key = None
     base_url = None
@@ -31,12 +33,12 @@ class circleAPI:
             print e
             return None
 
-    def post(self, url, key, value):
-        tup = (key, value)
-        tup = urllib.urlencode(data)
-        request = RequestWithMethod('POST', url, headers={'Accept' : 'application/json'},data = bytearray(tup))
+    def post(self, url, tup):
+        tup = json.dumps(tup)
+        print tup
+        request = Request(url, headers={'Accept' : 'application    /json', 'Content-Type': 'application/json'})
         try:
-            response = urlopen(request)
+            response = urlopen(request, tup)
             data = response.read()
             return data
         except URLError, e:
@@ -50,22 +52,23 @@ class circleAPI:
         return data
 
     def getBuilds(self, username, reponame):
-        request = self.get(self.base_url +"/api/v1/project/" + username + "/" + reponame + "?circle-token=" + self.key)
+        request = self.get(self.base_url + "/api/v1/project/" + username + "/" + reponame + "?circle-token=" + self.key)
         data = json.loads(request)
         return data
 
     def getEnvironmentVariables(self, username, reponame):
-        request = self.get(self.base_url +"/api/v1/project/" + username + "/" + reponame + "/envvar?circle-token=" + self.key)
+        request = self.get(self.base_url + "/api/v1/project/" + username + "/" + reponame + "/envvar?circle-token=" + self.key)
         data = json.loads(request)
         return data
 
     def deleteEnvironmentVariable(self, username, reponame, envvar):
-        request = self.delete(self.base_url +"/api/v1/project/" + username + "/" + reponame + "/envvar/" + envvar + "?circle-token=" + self.key)
+        request = self.delete(self.base_url + "/api/v1/project/" + username + "/" + reponame + "/envvar/" + envvar + "?circle-token=" + self.key)
         data = json.loads(request)
         return data
 
-    def addEnvironmentVariable(self, username, reponame, envvar, value):
-        request = self.post(self.base_url +"/api/v1/project/" + username + "/" + reponame + "/envvar?circle-token=" + self.key, envvar, value)
+    def addEnvironmentVariable(self, username, reponame, tup):
+        request = self.post(self.base_url + "/api/v1/project/" + username + "/" + reponame + "/envvar?circle-token=" + self.key, tup)
+        print request
         data = json.loads(request)
         return data
 
