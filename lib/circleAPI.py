@@ -35,7 +35,6 @@ class circleAPI:
 
     def post(self, url, tup):
         tup = json.dumps(tup)
-        print tup
         request = Request(url, headers={'Accept' : 'application    /json', 'Content-Type': 'application/json'})
         try:
             response = urlopen(request, tup)
@@ -64,12 +63,13 @@ class circleAPI:
     def deleteEnvironmentVariable(self, username, reponame, envvar):
         request = self.delete(self.base_url + "/api/v1/project/" + username + "/" + reponame + "/envvar/" + envvar + "?circle-token=" + self.key)
         data = json.loads(request)
+        print "    Deleted " + envvar
         return data
 
     def addEnvironmentVariable(self, username, reponame, tup):
         request = self.post(self.base_url + "/api/v1/project/" + username + "/" + reponame + "/envvar?circle-token=" + self.key, tup)
-        print request
         data = json.loads(request)
+        print "    Added new var"
         return data
 
     def getSingleBuild(self, username, reponame, buildNum):
