@@ -9,7 +9,7 @@ then run
 
 `python update-environment.py -k <someVarName> -v <someValue>`
 
-where someVarName is the name of the variable you are replacing and someValue is the new value you want
+where `<someVarName>` is the name of the variable you are replacing and `<someValue>` is the new value you want
 
 ##Caveats
 
